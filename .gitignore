@@ -1,0 +1,28 @@
+# compiled class files
+*.class
+
+# log files
+*.log
+
+# package files
+*.jar
+!gradle-wrapper.jar
+*.war
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+# gradle files
+.gradle
+bin
+build
+
+# vscode files
+.vscode
+
+# macos files
+.DS_Store
