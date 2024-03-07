@@ -2,22 +2,21 @@ package eu.xycorp;
 
 import java.net.URL;
 
+import eu.xycorp.entity.Observer;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.Sphere;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 public final class Universe extends Application {
 
-    private double x = 0, y = 0;
+    // private double x = 0, y = 0;
 
     public Universe() {}
 
@@ -33,18 +32,31 @@ public final class Universe extends Application {
         final PhongMaterial material = new PhongMaterial();
         if (url != null) material.setDiffuseMap(new Image(url.toExternalForm()));
 
-        final Sphere sphere = new Sphere(10);
-        sphere.setMaterial(material);
+        final Sphere a = new Sphere(10);
+        a.setMaterial(material);
 
-        root.getChildren().add(sphere);
+        final Sphere b = new Sphere(10);
+        b.setLayoutX(-20);
+        // b.setTranslateZ(5);
+        b.setMaterial(material);
 
-        final PerspectiveCamera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-100);
+        final Box c = new Box(20, 20, 20);
+        c.setLayoutX(-15);
+        c.setLayoutY(15);
+        c.setMaterial(material);
+
+        root.getChildren().addAll(a, b, c);
+
+        final Observer observer = new Observer();
+
+        /*final PerspectiveCamera camera = new PerspectiveCamera(true);
+        camera.setTranslateZ(-100);*/
 
         final Scene scene = new Scene(root);
         scene.setFill(Color.BLACK);
-        scene.setCamera(camera);
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        scene.setCamera(observer);
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> observer.move(event.getCode()));
+        /*scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.RIGHT) {
                 this.x += 5; this.y += 5;
                 root.getTransforms().addAll(
@@ -52,11 +64,11 @@ public final class Universe extends Application {
                     new Rotate(this.y, Rotate.Y_AXIS)
                 );
             }
-        });
+        });*/
 
         stage.setTitle("Powered by xycorp");
-        stage.setHeight(800);
         stage.setWidth(800);
+        stage.setHeight(600);
         stage.setScene(scene);
         stage.show();
     }
