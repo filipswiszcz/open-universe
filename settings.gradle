@@ -1,1 +1,3 @@
 rootProject.name = "open-universe"
+
+include("open-universe", "open-universe-engine")
