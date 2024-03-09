@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -16,13 +17,9 @@ import javafx.stage.Stage;
 
 public final class Universe extends Application {
 
-    // private double x = 0, y = 0;
-
     public Universe() {}
 
-    public void init() {
-        // TODO load data
-    }
+    public void init() {} // TODO load settings, textures etc
 
     public void start(final Stage stage) {
 
@@ -49,22 +46,12 @@ public final class Universe extends Application {
 
         final Observer observer = new Observer();
 
-        /*final PerspectiveCamera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-100);*/
-
         final Scene scene = new Scene(root);
         scene.setFill(Color.BLACK);
         scene.setCamera(observer);
+        // scene.setCursor(Cursor.NONE);
         scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> observer.move(event.getCode()));
-        /*scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.RIGHT) {
-                this.x += 5; this.y += 5;
-                root.getTransforms().addAll(
-                    new Rotate(this.x, Rotate.X_AXIS),
-                    new Rotate(this.y, Rotate.Y_AXIS)
-                );
-            }
-        });*/
+        scene.addEventHandler(MouseEvent.MOUSE_MOVED, event -> observer.rotate(event.getSceneX(), event.getSceneY(), event, scene.getWidth(), scene.getHeight()));
 
         stage.setTitle("Powered by xycorp");
         stage.setWidth(800);
