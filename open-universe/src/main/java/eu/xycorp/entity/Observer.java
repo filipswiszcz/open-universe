@@ -2,24 +2,30 @@ package eu.xycorp.entity;
 
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Rotate;
 
 public class Observer extends PerspectiveCamera {
 
     private double x, y, z;
+
+    private double a, b;
     private double yaw, pitch;
 
-    private double sensitivity = 0.1;
+    private final double CAM_DISTANCE = -100;
+    private final double CAM_FOV = 60;
 
-    private double speed = 1.0;
+    private double SENSITIVITY = 0.5;
+
+    private double SPEED = 1.0;
 
     // TO REMOVAL
-    private Rotate ry = new Rotate(0, Rotate.Y_AXIS);
     private Rotate rx = new Rotate(0, Rotate.X_AXIS);
+    private Rotate ry = new Rotate(0, Rotate.Y_AXIS);
 
     public Observer() {
         super(true);
+
+        this.setTranslateZ(CAM_DISTANCE);
 
         // TODO set starting pos
 
@@ -30,17 +36,17 @@ public class Observer extends PerspectiveCamera {
         // for that i need to write live map loading
 
     @Deprecated
-    public void rotate(final double yaw, double pitch, final MouseEvent event, final double width, final double height) {
+    public void rot(double yaw, double pitch, double width, double height) {
 
-        if (pitch > 0) pitch = 0 - pitch;
+        double r = Math.min(width, height) / 2;
 
-        // System.out.println("x_axis: " + yaw + ", y_axis: " + pitch);
+        System.out.println(yaw + ", " + pitch);
 
-        rx.setAngle(rx.getAngle() - (pitch - this.pitch) * 0.1);
-        ry.setAngle(ry.getAngle() - (yaw - this.yaw) * 0.1);
+        double dx = (yaw - width / 2) / r * 20;
+        double dy = (pitch - height / 2) / r * 20;
 
-        this.yaw = yaw;
-        this.pitch = pitch;
+        this.rx.setAngle((rx.getAngle() + dy) * SENSITIVITY);
+        this.ry.setAngle((ry.getAngle() + dx) * SENSITIVITY);
     }
 
     @Deprecated

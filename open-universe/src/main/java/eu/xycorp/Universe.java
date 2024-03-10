@@ -4,6 +4,7 @@ import java.net.URL;
 
 import eu.xycorp.entity.Observer;
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -51,12 +52,16 @@ public final class Universe extends Application {
         scene.setCamera(observer);
         // scene.setCursor(Cursor.NONE);
         scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> observer.move(event.getCode()));
-        scene.addEventHandler(MouseEvent.MOUSE_MOVED, event -> observer.rotate(event.getSceneX(), event.getSceneY(), event, scene.getWidth(), scene.getHeight()));
+        scene.addEventHandler(MouseEvent.MOUSE_MOVED, event -> observer.rot(event.getSceneX(), event.getSceneY(), scene.getWidth(), scene.getHeight()));
+        scene.addEventHandler(MouseEvent.MOUSE_EXITED, event -> System.out.println("ex"));
 
         stage.setTitle("Powered by xycorp");
         stage.setWidth(800);
         stage.setHeight(600);
+        stage.setAlwaysOnTop(true);
         stage.setScene(scene);
+        // stage.setFullScreen(true);
+        stage.setFullScreenExitHint("ESC to exit fullscreen!");
         stage.show();
     }
 
