@@ -3,7 +3,7 @@ package eu.xycorp.entity;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
-public abstract class Observer {
+public abstract class ObserverOLD {
 
     protected DoubleProperty x = new SimpleDoubleProperty();
     protected DoubleProperty y = new SimpleDoubleProperty();

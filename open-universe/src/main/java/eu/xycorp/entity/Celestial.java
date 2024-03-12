@@ -11,7 +11,7 @@ import javafx.scene.robot.Robot;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
-public class Celestial extends Observer {
+public class Celestial extends ObserverOLD {
 
     private DoubleProperty rcx = new SimpleDoubleProperty();
     private DoubleProperty rcy = new SimpleDoubleProperty();
@@ -39,21 +39,21 @@ public class Celestial extends Observer {
         this.rcx.bind(stage.xProperty().add(this.cx));
         this.rcy.bind(stage.yProperty().add(this.cy));
 
-        this.rx.angleProperty().bind(this.yaw.subtract(90));
-        this.ry.angleProperty().bind(this.pitch);
+        this.rx.angleProperty().bind(this.yaw.subtract(90).multiply(0.5));
+        this.ry.angleProperty().bind(this.pitch.multiply(0.5));
 
         this.camera.translateXProperty().bind(this.x);
         this.camera.translateZProperty().bind(this.y);
         this.camera.translateYProperty().bind(this.z);
     }
 
-    public EventHandler<KeyEvent> handleKeyboard() {
+    public EventHandler<KeyEvent> getKeyboardHandler() {
         return event -> {
             switch (event.getCode()) {
-                case A: {this.rotate(-1, 0); break;}
-                case D: {this.rotate(1, 0); break;}
                 case W: {this.move(1, 1, 0); break;}
+                case A: {this.rotate(-1, 0); break;}
                 case S: {this.move(-1, -1, 0); break;}
+                case D: {this.rotate(1, 0); break;}
                 case SPACE: {this.move(0, 0, 10); break;}
                 case SHIFT: {this.move(0, 0, -10); break;}
                 default: break;
@@ -61,7 +61,7 @@ public class Celestial extends Observer {
         };
     }
 
-    public EventHandler<MouseEvent> handleMouse() {
+    public EventHandler<MouseEvent> getMouseHandler() {
         return event -> {
             this.rotate(event.getSceneX() - this.cx.doubleValue(), this.cy.doubleValue() - event.getSceneY());
             Platform.runLater(() -> {
